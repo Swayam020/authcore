@@ -1,0 +1,93 @@
+# Compiled class files
+*.class
+
+# Maven build output
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# Gradle (in case)
+.gradle/
+build/
+
+# IDE - IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# IDE - Eclipse / VS Code
+.classpath
+.project
+.settings/
+.vscode/
+
+# Spring Boot
+*.log
+application-local.yml
+application-local.properties
+
+# Environment / secrets
+.env
+.env.local
+*.pem
+*.key
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes (local data)
+mysql-data/
+redis-data/
+*.class
+
+# Maven build output
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# Gradle (in case)
+.gradle/
+build/
+
+# IDE - IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# IDE - Eclipse / VS Code
+.classpath
+.project
+.settings/
+.vscode/
+
+# Spring Boot
+*.log
+application-local.yml
+application-local.properties
+
+# Environment / secrets
+.env
+.env.local
+*.pem
+*.key
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes (local data)
+mysql-data/
+redis-data/
