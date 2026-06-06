@@ -33,7 +33,7 @@ docker compose up -d
 ## Status
 
 - [x] Milestone 0 - Repository initialized
-- [ ] Milestone 1 — Spring Boot project scaffolded
+- [x] Milestone 1 — Spring Boot project scaffolded
 - [ ] Milestone 2 — Docker Compose (MySQL + Redis)
 - [ ] Milestone 3 — User entity and repository
 - [ ] Milestone 4 — Registration with BCrypt
