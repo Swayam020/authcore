@@ -34,7 +34,7 @@ docker compose up -d
 
 - [x] Milestone 0 - Repository initialized
 - [x] Milestone 1 — Spring Boot project scaffolded
-- [ ] Milestone 2 — Docker Compose (MySQL + Redis)
+- [x] Milestone 2 — Docker Compose (MySQL + Redis)
 - [ ] Milestone 3 — User entity and repository
 - [ ] Milestone 4 — Registration with BCrypt
 - [ ] Milestone 5 — JWT service
