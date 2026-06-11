@@ -34,7 +34,7 @@ public class User {
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, columnDefinition = "VARCHAR(20)")
     private Role role;
 
     @CreationTimestamp
