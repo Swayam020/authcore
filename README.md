@@ -38,7 +38,7 @@ docker compose up -d
 - [x] Milestone 3 — User entity and repository
 - [x] Milestone 4 — Registration with BCrypt
 - [x] Milestone 5 — JWT service
-- [ ] Milestone 6 — Login endpoint
+- [x] Milestone 6 — Login endpoint
 - [ ] Milestone 7 — JWT authentication filter
 - [ ] Milestone 8 — Spring Security configuration
 - [ ] Milestone 9 — Token refresh
