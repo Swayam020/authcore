@@ -1,10 +1,13 @@
 package com.swayam.authcore.service;
 
+import com.swayam.authcore.dto.AuthResponse;
+import com.swayam.authcore.dto.LoginRequest;
 import com.swayam.authcore.dto.RegisterRequest;
 import com.swayam.authcore.dto.UserResponse;
 import com.swayam.authcore.entity.Role;
 import com.swayam.authcore.entity.User;
 import com.swayam.authcore.exception.EmailAlreadyExistsException;
+import com.swayam.authcore.exception.InvalidCredentialsException;
 import com.swayam.authcore.exception.UsernameAlreadyExistsException;
 import com.swayam.authcore.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Transactional
     public UserResponse register(RegisterRequest request) {
@@ -41,5 +45,26 @@ public class AuthService {
         log.info("Registered new user: id={}, username={}", saved.getId(), saved.getUsername());
 
         return UserResponse.from(saved);
+    }
+
+    @Transactional(readOnly = true)
+    public AuthResponse login(LoginRequest request) {
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(InvalidCredentialsException::new);
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+            throw new InvalidCredentialsException();
+        }
+
+        String accessToken = jwtService.generateAccessToken(user.getUsername(), user.getRole().name());
+        String refreshToken = jwtService.generateRefreshToken(user.getUsername());
+
+        log.info("User logged in: username={}", user.getUsername());
+
+        return AuthResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .tokenType("Bearer")
+                .build();
     }
 }

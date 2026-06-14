@@ -1,5 +1,7 @@
 package com.swayam.authcore.controller;
 
+import com.swayam.authcore.dto.AuthResponse;
+import com.swayam.authcore.dto.LoginRequest;
 import com.swayam.authcore.dto.RegisterRequest;
 import com.swayam.authcore.dto.UserResponse;
 import com.swayam.authcore.service.AuthService;
@@ -23,5 +25,11 @@ public class AuthController {
     public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
         UserResponse response = authService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+        AuthResponse response = authService.login(request);
+        return ResponseEntity.ok(response);
     }
 }
