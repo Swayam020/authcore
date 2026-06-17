@@ -40,7 +40,7 @@ docker compose up -d
 - [x] Milestone 5 — JWT service
 - [x] Milestone 6 — Login endpoint
 - [x] Milestone 7 — JWT authentication filter
-- [ ] Milestone 8 — Spring Security configuration
+- [x] Milestone 8 — Spring Security configuration
 - [ ] Milestone 9 — Token refresh
 - [ ] Milestone 10 — Redis blacklist and logout
 - [ ] Milestone 11 — Role-based access control
