@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import com.swayam.authcore.dto.RefreshRequest;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -36,5 +37,9 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity<String> me(Authentication authentication) {
         return ResponseEntity.ok("Authenticated as: " + authentication.getName());
+    }
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthResponse> refresh(@Valid @RequestBody RefreshRequest request) {
+        return ResponseEntity.ok(authService.refresh(request));
     }
 }

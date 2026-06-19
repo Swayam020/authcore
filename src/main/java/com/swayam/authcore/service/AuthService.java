@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.swayam.authcore.dto.RefreshRequest;
+import com.swayam.authcore.exception.InvalidTokenException;
 
 @Service
 @RequiredArgsConstructor
@@ -64,6 +66,29 @@ public class AuthService {
         return AuthResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .tokenType("Bearer")
+                .build();
+    }
+    @Transactional(readOnly = true)
+    public AuthResponse refresh(RefreshRequest request) {
+        String token = request.getRefreshToken();
+        if (!jwtService.isTokenValid(token)) {
+            throw new InvalidTokenException("Invalid or expired refresh token");
+        }
+        String type = jwtService.extractTokenType(token);
+        if (!"refresh".equals(type)) {
+            throw new InvalidTokenException("Provided token is not a refresh token");
+        }
+        String username = jwtService.extractUsername(token);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new InvalidTokenException("User no longer exists"));
+
+        String newAccess = jwtService.generateAccessToken(user.getUsername(), user.getRole().name());
+        String newRefresh = jwtService.generateRefreshToken(user.getUsername());
+
+        return AuthResponse.builder()
+                .accessToken(newAccess)
+                .refreshToken(newRefresh)
                 .tokenType("Bearer")
                 .build();
     }
