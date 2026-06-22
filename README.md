@@ -42,7 +42,7 @@ docker compose up -d
 - [x] Milestone 7 — JWT authentication filter
 - [x] Milestone 8 — Spring Security configuration
 - [x] Milestone 9 — Token refresh
-- [ ] Milestone 10 — Redis blacklist and logout
+- [x] Milestone 10 — Redis blacklist and logout
 - [ ] Milestone 11 — Role-based access control
 - [ ] Milestone 12 — Unit tests
 - [ ] Milestone 13 — Swagger documentation
