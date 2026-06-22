@@ -12,6 +12,7 @@ import com.swayam.authcore.exception.UsernameAlreadyExistsException;
 import com.swayam.authcore.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final TokenBlacklistService tokenBlacklistService;
 
     @Transactional
     public UserResponse register(RegisterRequest request) {
@@ -91,5 +93,12 @@ public class AuthService {
                 .refreshToken(newRefresh)
                 .tokenType("Bearer")
                 .build();
+    }
+    public void logout(String accessToken) {
+        if (jwtService.isTokenValid(accessToken)) {
+            String jti = jwtService.extractJti(accessToken);
+            long remaining = jwtService.getRemainingMillis(accessToken);
+            tokenBlacklistService.blacklist(jti, remaining);
+        }
     }
 }

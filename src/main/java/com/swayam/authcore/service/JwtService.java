@@ -5,7 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
+import java.util.UUID;
 import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
@@ -27,10 +27,18 @@ public class JwtService {
         this.accessTokenExpirationMs = accessTokenExpirationMs;
         this.refreshTokenExpirationMs = refreshTokenExpirationMs;
     }
+    public String extractJti(String token) {
+        return extractClaim(token, Claims::getId);
+    }
+
+    public long getRemainingMillis(String token) {
+        return extractExpiration(token).getTime() - System.currentTimeMillis();
+    }
 
     public String generateAccessToken(String username, String role) {
         return Jwts.builder()
                 .subject(username)
+                .id(UUID.randomUUID().toString())
                 .claim("role", role)
                 .claim("type", "access")
                 .issuedAt(new Date())

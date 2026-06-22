@@ -1,5 +1,5 @@
 package com.swayam.authcore.controller;
-
+import org.springframework.web.bind.annotation.RequestHeader;
 import com.swayam.authcore.dto.AuthResponse;
 import com.swayam.authcore.dto.LoginRequest;
 import com.swayam.authcore.dto.RegisterRequest;
@@ -41,5 +41,12 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refresh(@Valid @RequestBody RefreshRequest request) {
         return ResponseEntity.ok(authService.refresh(request));
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            authService.logout(authHeader.substring(7));
+        }
+        return ResponseEntity.noContent().build();   // 204
     }
 }

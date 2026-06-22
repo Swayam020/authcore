@@ -27,6 +27,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private static final String BEARER_PREFIX = "Bearer ";
 
     private final JwtService jwtService;
+    private final com.swayam.authcore.service.TokenBlacklistService blacklistService;
 
     @Override
     protected void doFilterInternal(
@@ -45,6 +46,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         try {
             if (jwtService.isTokenValid(token)
+                    && !blacklistService.isBlacklisted(jwtService.extractJti(token))
                     && SecurityContextHolder.getContext().getAuthentication() == null) {
 
                 String username = jwtService.extractUsername(token);
